@@ -9,6 +9,7 @@ from django import forms
 
 class CustomUserCreationForm(UserCreationForm):
     ROLE_CHOICES = (
+        ('HeadTeacher', 'HeadTeacher'),
         ('Teacher', 'Teacher'),
         ('Parent', 'Parent'),
     )
@@ -26,6 +27,7 @@ def register(request):
                 TeacherProfile.objects.create(user=user)
             elif role == 'Parent':
                 ParentProfile.objects.create(user=user)
+            # For HeadTeacher, no additional profile needed
             login(request, user)
             return redirect('home')
     else:
