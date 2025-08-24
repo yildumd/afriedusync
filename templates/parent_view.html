@@ -12,6 +12,32 @@
                 <p><strong><i class="fas fa-calendar-check"></i> Attendance:</strong> {{ student.attendance }} days</p>
                 <p><strong><i class="fas fa-star"></i> Grades:</strong> {{ student.grades|default:"Not yet available" }}</p>
                 <p><strong><i class="fas fa-comment"></i> Behavior:</strong> {{ student.behavior_notes|default:"No notes" }}</p>
+                <h5><i class="fas fa-book"></i> Courses:</h5>
+                <ul>
+                    {% for course in student.courses.all %}
+                    <li>{{ course.name }} - {{ course.description }}</li>
+                    {% empty %}
+                    <li>No courses enrolled.</li>
+                    {% endfor %}
+                </ul>
+                <h5><i class="fas fa-robot"></i> Clubs:</h5>
+                <ul>
+                    {% for club in student.clubs.all %}
+                    <li>{{ club.name }} - {{ club.description }}</li>
+                    {% empty %}
+                    <li>No clubs enrolled.</li>
+                    {% endfor %}
+                </ul>
+                <h5><i class="fas fa-tasks"></i> Assignments:</h5>
+                <ul>
+                    {% for assignment in assignments %}
+                    {% if assignment.course in student.courses.all %}
+                    <li>{{ assignment.title }} (Due: {{ assignment.due_date }}) - {{ assignment.description }}</li>
+                    {% endif %}
+                    {% empty %}
+                    <li>No assignments.</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
         {% empty %}

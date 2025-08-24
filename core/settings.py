@@ -1,12 +1,13 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-%vr%a@af!w-+on*a-*x3b&932sm!8+l(1kbn_4@$()7r*$&kv='
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-%vr%a@af!w-+on*a-*x3b&932sm!8+l(1kbn_4@$()7r*$&kv=')
 
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # For Vercel, allow all hosts
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -71,7 +72,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'  # Set to Nigerian time zone
 
 USE_I18N = True
 

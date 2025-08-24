@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from .models import TeacherProfile, ParentProfile, Student, LessonPlan
+from .models import TeacherProfile, ParentProfile, Student, LessonPlan, Club, Course, Assignment
 from django import forms
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,9 +27,8 @@ def register(request):
                 TeacherProfile.objects.create(user=user)
             elif role == 'Parent':
                 ParentProfile.objects.create(user=user)
-            # For HeadTeacher, no additional profile needed
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -41,7 +40,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
         else:
             messages.error(request, 'Invalid credentials')
     return render(request, 'login.html')
@@ -50,8 +49,13 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+def landing(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return render(request, 'landing.html')
+
 @login_required
-def home(request):
+def dashboard(request):
     user_groups = request.user.groups.values_list('name', flat=True)
     if 'HeadTeacher' in user_groups:
         return render(request, 'headteacher_dashboard.html')
@@ -69,7 +73,7 @@ class TeacherProfileForm(forms.ModelForm):
 @login_required
 def teacher_profile(request):
     if 'Teacher' not in request.user.groups.values_list('name', flat=True):
-        return redirect('home')
+        return redirect('dashboard')
     profile = TeacherProfile.objects.get(user=request.user)
     if request.method == 'POST':
         form = TeacherProfileForm(request.POST, instance=profile)
@@ -88,7 +92,7 @@ class LessonPlanForm(forms.ModelForm):
 @login_required
 def submit_lesson_plan(request):
     if 'Teacher' not in request.user.groups.values_list('name', flat=True):
-        return redirect('home')
+        return redirect('dashboard')
     if request.method == 'POST':
         form = LessonPlanForm(request.POST)
         if form.is_valid():
@@ -96,7 +100,7 @@ def submit_lesson_plan(request):
             plan.teacher = request.user
             plan.save()
             messages.success(request, 'Lesson plan submitted')
-            return redirect('home')
+            return redirect('dashboard')
     else:
         form = LessonPlanForm()
     return render(request, 'lesson_plan.html', {'form': form})
@@ -104,10 +108,11 @@ def submit_lesson_plan(request):
 @login_required
 def parent_view_student(request):
     if 'Parent' not in request.user.groups.values_list('name', flat=True):
-        return redirect('home')
+        return redirect('dashboard')
     profile = ParentProfile.objects.get(user=request.user)
     students = profile.students.all()
-    return render(request, 'parent_view.html', {'students': students})
+    assignments = Assignment.objects.filter(course__student__in=students)
+    return render(request, 'parent_view.html', {'students': students, 'assignments': assignments})
 
 class LessonPlanApprovalForm(forms.ModelForm):
     rejection_reason = forms.CharField(widget=forms.Textarea, required=False)
@@ -119,7 +124,7 @@ class LessonPlanApprovalForm(forms.ModelForm):
 @login_required
 def approve_lesson_plan(request):
     if 'HeadTeacher' not in request.user.groups.values_list('name', flat=True):
-        return redirect('home')
+        return redirect('dashboard')
     lesson_plans = LessonPlan.objects.all()
     if request.method == 'POST':
         plan_id = request.POST.get('plan_id')

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10 text-center">
+        <h1 class="display-4"><i class="fas fa-school"></i> Welcome to AfriEduSync</h1>
+        <p class="lead">Revolutionizing secondary school management in Nigeria and Africa. Centralize monitoring, synchronize activities, and boost efficiency for better learning outcomes.</p>
+        <hr class="my-4">
+        <p>AfriEduSync empowers head teachers to oversee teacher activities, student performance, and lesson plans in one platform. Improve efficiency with real-time tracking, customizable templates, and seamless communication.</p>
+        <a class="btn btn-primary btn-lg m-2" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+        <a class="btn btn-outline-primary btn-lg m-2" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-chart-line"></i> Efficiency Boost</h5>
+                <p class="card-text">Streamline operations and reduce administrative burdens for schools across Africa.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-users"></i> Stakeholder Collaboration</h5>
+                <p class="card-text">Connect head teachers, teachers, parents, and students in a unified system.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-rocket"></i> Innovation in Education</h5>
+                <p class="card-text">Integrate clubs like robotics and coding to prepare students for the future.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
