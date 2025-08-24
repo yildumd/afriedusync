@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1 class="text-center mb-4"><i class="fas fa-user-graduate"></i> Student Performance</h1>
+        {% for student in students %}
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <h3>{{ student.name }} ({{ student.grade }})</h3>
+            </div>
+            <div class="card-body">
+                <p><strong><i class="fas fa-calendar-check"></i> Attendance:</strong> {{ student.attendance }} days</p>
+                <p><strong><i class="fas fa-star"></i> Grades:</strong> {{ student.grades|default:"Not yet available" }}</p>
+                <p><strong><i class="fas fa-comment"></i> Behavior:</strong> {{ student.behavior_notes|default:"No notes" }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No students assigned yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3><i class="fas fa-check-circle"></i> Approve Lesson Plans</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Teacher</th>
+                            <th>Submission Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for plan in lesson_plans %}
+                        <tr>
+                            <td>{{ plan.title }}</td>
+                            <td>{{ plan.teacher.username }}</td>
+                            <td>{{ plan.submission_date|date:"Y-m-d" }}</td>
+                            <td>
+                                {% if plan.approved %}
+                                <span class="badge bg-success"><i class="fas fa-check"></i> Approved</span>
+                                {% else %}
+                                <span class="badge bg-warning"><i class="fas fa-clock"></i> Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="plan_id" value="{{ plan.id }}">
+                                    <div class="input-group">
+                                        <select name="approved" class="form-select">
+                                            <option value="True">Approve</option>
+                                            <option value="False" {% if not plan.approved %}selected{% endif %}>Reject</option>
+                                        </select>
+                                        <input type="text" name="rejection_reason" class="form-control" placeholder="Reason (if rejected)" value="{{ plan.rejection_reason }}">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No lesson plans submitted yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
