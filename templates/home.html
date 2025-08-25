@@ -1,16 +1,123 @@
 {% extends 'base.html' %}
+{% block title %}Welcome to AfriEduSync{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card text-center">
-            <div class="card-header bg-primary text-white">
-                <h2><i class="fas fa-school"></i> Welcome to AfriEduSync</h2>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-education-50 py-8 px-4">
+    <div class="max-w-4xl w-full">
+        <!-- Welcome Header -->
+        <div class="text-center mb-12">
+            <div class="w-24 h-24 bg-gradient-to-r from-primary-500 to-education-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <i class="fas fa-school text-white text-4xl"></i>
             </div>
-            <div class="card-body">
-                <p class="card-text">Hello, {{ user.username }}! Your role is being set up.</p>
-                <a href="{% url 'logout' %}" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                Welcome to <span class="bg-gradient-to-r from-primary-600 to-education-600 bg-clip-text text-transparent">AfriEduSync</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Hello, <span class="font-semibold text-primary-600">{{ user.username }}</span>! We're getting everything ready for you.
+            </p>
+        </div>
+
+        <!-- Status Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border-l-4 border-primary-500">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center mb-6 md:mb-0">
+                    <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mr-6">
+                        <i class="fas fa-cog text-primary-600 text-2xl animate-spin"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-gray-800">Your account is being configured</h2>
+                        <p class="text-gray-600">Your role permissions are being set up. This won't take long!</p>
+                    </div>
+                </div>
+                <div class="bg-primary-50 text-primary-800 px-4 py-2 rounded-full text-sm font-medium">
+                    <i class="fas fa-clock mr-2"></i> Processing
+                </div>
             </div>
+
+            <!-- Progress Bar -->
+            <div class="mt-6">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-gradient-to-r from-primary-500 to-education-500 h-2.5 rounded-full w-3/4"></div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600 mt-2">
+                    <span>Setting up your account</span>
+                    <span>75% complete</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Next Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-10">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">What to expect next</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-6 bg-primary-50 rounded-xl">
+                    <div class="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-tachometer-alt text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Personalized Dashboard</h3>
+                    <p class="text-gray-600 text-sm">A custom dashboard tailored to your role and responsibilities</p>
+                </div>
+                
+                <div class="text-center p-6 bg-education-50 rounded-xl">
+                    <div class="w-12 h-12 bg-education-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Role-Based Access</h3>
+                    <p class="text-gray-600 text-sm">Access to features and data specific to your position</p>
+                </div>
+                
+                <div class="text-center p-6 bg-purple-50 rounded-xl">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-rocket text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800 mb-2">Quick Onboarding</h3>
+                    <p class="text-gray-600 text-sm">Guided setup to get you started quickly</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="bg-gradient-to-r from-primary-600 to-education-600 rounded-2xl shadow-lg p-8 text-center text-white">
+            <h2 class="text-2xl font-semibold mb-4">Need help getting started?</h2>
+            <p class="mb-6 opacity-90">Our support team is here to help you with any questions</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="bg-white text-primary-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-question-circle mr-2"></i> Help Center
+                </a>
+                <a href="#" class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-envelope mr-2"></i> Contact Support
+                </a>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="text-center mt-10">
+            <a href="{% url 'logout' %}" class="inline-flex items-center text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-300">
+                <i class="fas fa-sign-out-alt mr-2"></i> Sign out
+            </a>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simulate progress animation
+        const progressBar = document.querySelector('.bg-gradient-to-r');
+        let width = 75;
+        
+        const animateProgress = () => {
+            if (width < 100) {
+                width += 1;
+                progressBar.style.width = width + '%';
+                document.querySelector('span:last-child').textContent = width + '% complete';
+            }
+        };
+        
+        // Animate every 1.5 seconds
+        setInterval(animateProgress, 1500);
+    });
+</script>
 {% endblock %}

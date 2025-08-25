@@ -11,4 +11,11 @@ urlpatterns = [
     path('lesson-plan/', views.submit_lesson_plan, name='lesson_plan'),
     path('parent-view/', views.parent_view_student, name='parent_view'),
     path('approve-lesson-plan/', views.approve_lesson_plan, name='approve_lesson_plan'),
+    
+    # Add these dashboard-specific URLs for better routing
+    path('teacher-dashboard/', views.teacher_dashboard, name='teacher_dashboard'),
+    path('headteacher-dashboard/', views.headteacher_dashboard, name='headteacher_dashboard'),
+    path('proprietor-dashboard/', views.proprietor_dashboard, name='proprietor_dashboard'),
+    path('vice-dashboard/', views.vice_dashboard, name='vice_dashboard'),
+    path('parent-dashboard/', views.parent_dashboard, name='parent_dashboard'),
 ]

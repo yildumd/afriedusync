@@ -1,22 +1,318 @@
 {% extends 'base.html' %}
+{% block title %}Teacher Dashboard - AfriEduSync{% endblock %}
+
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card text-center">
-            <div class="card-header bg-primary text-white">
-                <h2><i class="fas fa-chalkboard"></i> Teacher Dashboard</h2>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Welcome Header -->
+    <div class="bg-gradient-to-r from-education-600 to-primary-600 rounded-2xl p-6 shadow-lg mb-8">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                    Welcome, {{ user.get_full_name|default:user.username }}
+                </h1>
+                <p class="text-primary-100">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Teacher Dashboard
+                </p>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'teacher_profile' %}" class="btn btn-primary btn-lg w-100"><i class="fas fa-user-edit"></i> Update Courses</a>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <a href="{% url 'lesson_plan' %}" class="btn btn-primary btn-lg w-100"><i class="fas fa-file-alt"></i> Submit Lesson Plan</a>
-                    </div>
+            <div class="mt-4 md:mt-0">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg px-4 py-2">
+                    <p class="text-white text-sm">Today: {% now "F j, Y" %}</p>
+                    <p class="text-white text-xs">Week {{ current_week }} of Semester</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-education-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm">My Courses</p>
+                    <h3 class="text-2xl font-bold text-gray-800">5</h3>
+                </div>
+                <div class="w-12 h-12 bg-education-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-book-open text-education-600 text-xl"></i>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Active courses this semester</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-primary-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm">Students</p>
+                    <h3 class="text-2xl font-bold text-gray-800">120</h3>
+                </div>
+                <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-graduation-cap text-primary-600 text-xl"></i>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Total students across courses</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm">Lesson Plans</p>
+                    <h3 class="text-2xl font-bold text-gray-800">18</h3>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-file-alt text-green-600 text-xl"></i>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Submitted this month</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-lg border-l-4 border-blue-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 text-sm">Approval Rate</p>
+                    <h3 class="text-2xl font-bold text-gray-800">92%</h3>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check-circle text-blue-600 text-xl"></i>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Lesson plan approval rate</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <!-- Main Actions Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-bolt text-primary-600 mr-3"></i>
+                Teaching Tools
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="{% url 'teacher_profile' %}" class="group">
+                    <div class="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-4 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 border border-primary-200">
+                        <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-600 transition-colors">
+                            <i class="fas fa-user-edit text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-1">Update Courses</h3>
+                        <p class="text-sm text-gray-600">Manage your course assignments</p>
+                    </div>
+                </a>
+
+                <a href="{% url 'lesson_plan' %}" class="group">
+                    <div class="bg-gradient-to-r from-education-50 to-education-100 rounded-xl p-4 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 border border-education-200">
+                        <div class="w-16 h-16 bg-education-500 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-education-600 transition-colors">
+                            <i class="fas fa-file-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-1">Submit Lesson Plan</h3>
+                        <p class="text-sm text-gray-600">Create and submit new lesson plans</p>
+                    </div>
+                </a>
+
+                <a href="#" class="group">
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-4 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 border border-green-200">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-green-600 transition-colors">
+                            <i class="fas fa-clipboard-list text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-1">Gradebook</h3>
+                        <p class="text-sm text-gray-600">Enter and manage student grades</p>
+                    </div>
+                </a>
+
+                <a href="#" class="group">
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 border border-blue-200">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-800 mb-1">Schedule</h3>
+                        <p class="text-sm text-gray-600">View teaching schedule</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-history text-education-600 mr-3"></i>
+                Recent Activity
+            </h2>
+            
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                        <i class="fas fa-check text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">Lesson Plan Approved</p>
+                        <p class="text-xs text-gray-500">Mathematics Week 3 - 1 day ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                        <i class="fas fa-upload text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">New Lesson Plan Submitted</p>
+                        <p class="text-xs text-gray-500">Science Week 4 - 2 days ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                        <i class="fas fa-clock text-yellow-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">Lesson Plan Under Review</p>
+                        <p class="text-xs text-gray-500">English Week 4 - 3 days ago</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
+                        <i class="fas fa-comment text-purple-600"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">New Feedback Received</p>
+                        <p class="text-xs text-gray-500">From Head Teacher - 4 days ago</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="block text-center mt-6 text-primary-600 hover:text-primary-700 text-sm font-medium">
+                <i class="fas fa-list mr-2"></i>View All Activities
+            </a>
+        </div>
+    </div>
+
+    <!-- My Courses Section -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                <i class="fas fa-book-open text-education-600 mr-3"></i>
+                My Courses
+            </h2>
+            <span class="bg-education-100 text-education-800 text-sm font-medium px-3 py-1 rounded-full">
+                5 Courses
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl p-4 border border-primary-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-800">Mathematics</h3>
+                    <span class="bg-primary-500 text-white text-xs px-2 py-1 rounded-full">Grade 10</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">40 students</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Mon, Wed, Fri</span>
+                    <a href="#" class="text-primary-600 hover:text-primary-700 text-sm">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-education-50 to-education-100 rounded-xl p-4 border border-education-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-800">Science</h3>
+                    <span class="bg-education-500 text-white text-xs px-2 py-1 rounded-full">Grade 9</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">35 students</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Tue, Thu</span>
+                    <a href="#" class="text-education-600 hover:text-education-700 text-sm">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-gray-800">English</h3>
+                    <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">Grade 11</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-3">45 students</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">Mon, Tue, Thu</span>
+                    <a href="#" class="text-green-600 hover:text-green-700 text-sm">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <a href="{% url 'teacher_profile' %}" class="block text-center mt-6 text-primary-600 hover:text-primary-700 text-sm font-medium">
+            <i class="fas fa-cog mr-2"></i>Manage All Courses
+        </a>
+    </div>
+
+    <!-- Upcoming Deadlines -->
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-calendar-check text-orange-500 mr-3"></i>
+            Upcoming Deadlines
+        </h2>
+        
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-file-alt text-orange-600 text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">Mathematics Lesson Plan</p>
+                        <p class="text-xs text-gray-500">Due: Tomorrow</p>
+                    </div>
+                </div>
+                <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">Urgent</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-clipboard-list text-blue-600 text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">Grade Submission</p>
+                        <p class="text-xs text-gray-500">Due: 3 days</p>
+                    </div>
+                </div>
+                <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Pending</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-chalkboard text-green-600 text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">Science Project Review</p>
+                        <p class="text-xs text-gray-500">Due: 5 days</p>
+                    </div>
+                </div>
+                <span class="bg-green-500 text-white text-xs px-2 py-1 rounded-full">Upcoming</span>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple animation for dashboard elements
+    document.addEventListener('DOMContentLoaded', function() {
+        const dashboardCards = document.querySelectorAll('.bg-white, .bg-gradient-to-br');
+        
+        dashboardCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            
+            setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100 * index);
+        });
+    });
+</script>
 {% endblock %}
